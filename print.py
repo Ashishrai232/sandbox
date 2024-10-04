@@ -1,4 +1,4 @@
 print ("hello !!")
-printk ("goood jdm")
+print ("goood jdm")
 
 print ("diamond level nikal gya")
