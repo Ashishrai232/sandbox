@@ -1,0 +1,37 @@
+# Create a static website on HTML that will get deployed over nginx
+# Install Docker
+# Use Dockerfile to
+# Use Ubuntu:latest as base image
+# check if nginx is there
+# If not install nginx
+# move files to the container
+# make the image/container up
+# app go live
+
+FROM ubuntu:22.04
+
+# # WORKDIR /app
+# RUN if [ ! -x "$(command -v nginx)"] ; then \
+#  apt-get update && \
+#  apt-get install  -y nginx; fi
+
+RUN apt-get update && \
+    apt-get install -y nginx && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /var/www/html
+
+RUN rm -rf index.html
+
+COPY . .
+
+
+EXPOSE 80
+
+
+CMD ["nginx", "-g", "daemon off;"]
+
+# problems :
+    # nginx container dies as soon as it is run because we did not specify cmd command , hence if
+    # we want to run it continuously we need to use cmd command
+# These are the command-line arguments passed to the nginx program. The daemon off; part is critical for Docker. By default, Nginx runs as a "daemon," which means it forks and runs in the background. When a command in a Docker container runs in the background, the container thinks its job is done and immediately exits. The daemon off; argument forces Nginx to stay in the foreground, keeping the container alive and active
